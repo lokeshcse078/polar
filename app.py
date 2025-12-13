@@ -28,22 +28,19 @@ def create_app():
 
     # ---------------- ROUTES ---------------- #
 
-    @app.route("/")
-    def home():
-        return render_template("index.html")
+    @app.route('/login-page')
+    def login_page():
+        return render_template('login.html')  # make sure file is in templates/
 
-    @app.route("/health")
-    def health():
-        return jsonify({
-            "status": "ok",
-            "db_host": DB_HOST,
-            "db_name": DB_NAME
-        })
+    # ---------------- Dashboard Page ----------------
+    @app.route('/dashboard')
+    def dashboard_page():
+        return render_template('dashboard.html')  # must exist in templates/
 
-    return app
 
 
 app = create_app()
 
 if __name__ == "__main__":
     app.run()
+
