@@ -26,16 +26,16 @@ def create_app():
 
     db.init_app(app)
 
-    # ---------------- ROUTES ---------------- #
+# ---------------- ROUTES ---------------- #
 
-    @app.route('/login-page')
-    def login_page():
-        return render_template('login.html')  # make sure file is in templates/
+@app.route('/login-page')
+def login_page():
+    return render_template('login.html')  # make sure file is in templates/
 
-    # ---------------- Dashboard Page ----------------
-    @app.route('/dashboard')
-    def dashboard_page():
-        return render_template('dashboard.html')  # must exist in templates/
+# ---------------- Dashboard Page ----------------
+@app.route('/dashboard')
+def dashboard_page():
+    return render_template('dashboard.html')  # must exist in templates/
 
 
 
@@ -43,4 +43,5 @@ app = create_app()
 
 if __name__ == "__main__":
     app.run()
+
 
