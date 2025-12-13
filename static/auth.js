@@ -1,7 +1,7 @@
 // ==================== AUTHENTICATION FUNCTIONS ====================
 
-// Use relative API URL for Railway / production
-const API_URL = "";
+// Use relative API URL for production (Railway)
+const API_URL = ""; // Empty string ensures relative URLs work
 
 // ------------------ Authentication ------------------
 
@@ -9,7 +9,7 @@ const API_URL = "";
 function checkAuth() {
     const token = localStorage.getItem("auth_token");
     if (!token) {
-        window.location.href = "/login-page";
+        window.location.href = "/login-page"; // Redirect to login route
         return false;
     }
     return true;
@@ -28,10 +28,7 @@ function getCurrentUser() {
 // Logout function
 function logout() {
     if (confirm("Are you sure you want to logout?")) {
-        localStorage.removeItem("auth_token");
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("user_name");
-        localStorage.removeItem("user_role");
+        localStorage.clear();
         window.location.href = "/login-page";
     }
 }
@@ -39,17 +36,15 @@ function logout() {
 // Update navbar with user info
 function updateNavbar() {
     const user = getCurrentUser();
-    if (user.token) {
-        const userInfoDiv = document.getElementById("user-info");
-        if (userInfoDiv) {
-            userInfoDiv.innerHTML = `
-                <div class="user-info">
-                    <strong>${user.name}</strong>
-                    <small>User ID: ${user.id}</small>
-                </div>
-                <button class="btn-logout" onclick="logout()">Logout</button>
-            `;
-        }
+    const userInfoDiv = document.getElementById("user-info");
+    if (user.token && userInfoDiv) {
+        userInfoDiv.innerHTML = `
+            <div class="user-info">
+                <strong>${user.name}</strong>
+                <small>User ID: ${user.id}</small>
+            </div>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        `;
     }
 }
 
@@ -58,20 +53,17 @@ function updateNavbar() {
 // Make authenticated API call
 function fetchWithAuth(url, options = {}) {
     const token = localStorage.getItem("auth_token");
-    
+
     if (!token) {
         window.location.href = "/login-page";
         return Promise.reject("No authentication token");
     }
-    
+
     const headers = options.headers || {};
     headers["Authorization"] = `Bearer ${token}`;
     headers["Content-Type"] = "application/json";
-    
-    return fetch(API_URL + url, {
-        ...options,
-        headers: headers
-    });
+
+    return fetch(API_URL + url, { ...options, headers });
 }
 
 // ------------------ Notifications ------------------
@@ -79,7 +71,7 @@ function fetchWithAuth(url, options = {}) {
 // Show notification message
 function showNotification(message, type = "info", duration = 5000) {
     let notificationDiv = document.getElementById("notification");
-    
+
     if (!notificationDiv) {
         const container = document.querySelector(".container") || document.body;
         const div = document.createElement("div");
@@ -87,11 +79,11 @@ function showNotification(message, type = "info", duration = 5000) {
         container.insertBefore(div, container.firstChild);
         notificationDiv = div;
     }
-    
+
     notificationDiv.className = `alert alert-${type}`;
     notificationDiv.innerText = message;
     notificationDiv.style.display = "block";
-    
+
     if (duration > 0) {
         setTimeout(() => {
             notificationDiv.style.display = "none";
@@ -122,9 +114,9 @@ function formatCurrency(amount) {
 
 // ------------------ Page Initialization ------------------
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const path = window.location.pathname;
-    
+
     // Skip auth check on login/register pages
     if (!path.includes("/login-page") && !path.includes("/register-page")) {
         if (checkAuth()) {
