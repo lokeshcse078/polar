@@ -1,2 +1,3 @@
 #!/bin/bash
-echo'run'
+echo "Starting Flask application..."
+
