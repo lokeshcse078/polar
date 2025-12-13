@@ -2,11 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask + MySQL on Railway</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Service Management System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Flask + MySQL Deployment Successful</h1>
-    <p>Your Railway app is running correctly.</p>
+    <div class="login-wrapper">
+        <!-- Left Banner Section -->
+        <div class="login-banner">
+            <div class="logo">
+                <div class="logo-icon">🛠️</div>
+                <div class="logo-text">
+                    <h3>Polar Analytical</h3>
+                    <p>polaranalytical@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="banner-content">
+                <h2>Service Management System</h2>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">Easy instrument and customer management</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">Comprehensive service history management</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">AMC and maintenance scheduling</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✓</div>
+                        <div class="feature-text">Data export and reporting tools</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Login Form Section -->
+        <div class="login-form">
+            <div class="form-header">
+                <h1>Staff Login</h1>
+                <p>Enter your credentials to access the system</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your.email@company.com" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
+
+                <div id="message" class="message"></div>
+
+                <div class="form-footer">
+                    Contact your administrator to create an account
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AUTH JS -->
+    <script src="{{ url_for('static', filename='auth.js') }}"></script>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const messageDiv = document.getElementById("message");
+            const loginBtn = document.getElementById("loginBtn");
+
+            if (!email || !password) {
+                messageDiv.innerText = "Please fill in all fields";
+                messageDiv.className = "message error";
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = "Signing in...";
+
+            fetch("/login", {  // Relative path to Flask API
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ email, password })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) {
+                    messageDiv.innerText = res.error;
+                    messageDiv.className = "message error";
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = "Sign In";
+                } else if (res.token) {
+                    // Store user info
+                    localStorage.setItem("auth_token", res.token);
+                    localStorage.setItem("user_id", res.user_id);
+                    localStorage.setItem("user_name", res.user_name);
+                    localStorage.setItem("user_role", res.role);
+
+                    messageDiv.innerText = "✓ Login successful! Redirecting...";
+                    messageDiv.className = "message success";
+
+                    setTimeout(() => {
+                        window.location.href = "/dashboard";
+                    }, 1500);
+                }
+            })
+            .catch(err => {
+                messageDiv.innerText = "Connection error: " + err.message;
+                messageDiv.className = "message error";
+                loginBtn.disabled = false;
+                loginBtn.textContent = "Sign In";
+            });
+        });
+    </script>
 </body>
 </html>
