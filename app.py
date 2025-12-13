@@ -20,7 +20,7 @@ def get_db_connection():
 
 @app.route('/login-page')
 def login_page():
-    return render_template('login.html')  # templates/login.html
+    return render_template('index.html')  # templates/login.html
 
 @app.route('/dashboard')
 def dashboard_page():
@@ -58,3 +58,4 @@ def login_api():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
