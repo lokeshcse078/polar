@@ -1,79 +1,136 @@
+/* ===============================
+   GLOBAL RESET & THEME VARIABLES
+   =============================== */
+
+:root {
+  --bg-main: #0b0f1a;
+  --bg-card: #11162a;
+  --accent-primary: #4f9cff;
+  --accent-secondary: #00e5ff;
+  --text-main: #e6ebf2;
+  --text-muted: #9aa4bf;
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --glow-primary: rgba(79, 156, 255, 0.45);
+}
+
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f3f6fb;
+  background:
+    radial-gradient(circle at 20% 20%, #13204a, transparent 40%),
+    radial-gradient(circle at 80% 80%, #001d2e, transparent 45%),
+    var(--bg-main);
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--text-main);
 }
+
+/* ===============================
+   LAYOUT
+   =============================== */
 
 .container {
   text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===============================
+   LOGO SECTION
+   =============================== */
+
 .logo {
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 
 .logo-icon {
-  width: 60px;
-  height: 60px;
-  background: #1e5eff;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   color: #fff;
   font-size: 30px;
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 10px;
+  margin: 0 auto 12px;
+  box-shadow: 0 0 25px var(--glow-primary);
 }
 
 .logo h1 {
   font-size: 22px;
-  margin: 5px 0;
+  margin: 6px 0;
+  letter-spacing: 0.4px;
 }
 
 .logo p {
-  color: #666;
-  font-size: 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.3px;
 }
 
+/* ===============================
+   LOGIN CARD
+   =============================== */
+
 .card {
-  width: 380px;
-  background: #fff;
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  width: 390px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)),
+    var(--bg-card);
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+  backdrop-filter: blur(12px);
 }
 
 .card h2 {
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  font-size: 20px;
+  font-weight: 600;
 }
 
+/* ===============================
+   FORM ELEMENTS
+   =============================== */
+
 label {
-  font-size: 14px;
+  font-size: 13px;
   display: block;
   margin-bottom: 6px;
   text-align: left;
+  color: var(--text-muted);
 }
 
 .input-box {
   display: flex;
   align-items: center;
-  border: 1px solid #d0d5dd;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 16px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 18px;
+  background: rgba(255,255,255,0.02);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input-box span {
   margin-right: 10px;
+  font-size: 15px;
+  color: var(--accent-primary);
 }
 
 .input-box input {
@@ -81,28 +138,76 @@ label {
   outline: none;
   width: 100%;
   font-size: 14px;
+  background: transparent;
+  color: var(--text-main);
 }
+
+.input-box:focus-within {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(79,156,255,0.25);
+}
+
+/* ===============================
+   PRIMARY BUTTON
+   =============================== */
 
 .btn-primary {
   width: 100%;
-  padding: 12px;
-  background: #1e5eff;
-  color: white;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #ffffff;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 15px;
   cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: #1748c9;
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px var(--glow-primary);
 }
 
-.divider {
-  margin: 20px 0;
-  position: relative;
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   MESSAGE FEEDBACK
+   =============================== */
+
+.message {
+  margin-top: 14px;
   font-size: 13px;
-  color: #777;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message.error {
+  background: rgba(255, 70, 70, 0.12);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 70, 70, 0.35);
+}
+
+.message.success {
+  background: rgba(0, 255, 170, 0.12);
+  color: #00ffb2;
+  border: 1px solid rgba(0, 255, 170, 0.35);
+}
+
+/* ===============================
+   DIVIDER
+   =============================== */
+
+.divider {
+  margin: 24px 0;
+  position: relative;
+  font-size: 12px;
+  color: var(--text-muted);
 }
 
 .divider::before,
@@ -110,43 +215,53 @@ label {
   content: "";
   height: 1px;
   width: 35%;
-  background: #ddd;
+  background: var(--border-soft);
   position: absolute;
   top: 50%;
 }
 
-.divider::before {
-  left: 0;
-}
+.divider::before { left: 0; }
+.divider::after { right: 0; }
 
-.divider::after {
-  right: 0;
-}
+/* ===============================
+   GOOGLE BUTTON
+   =============================== */
 
 .btn-google {
   width: 100%;
-  padding: 10px;
-  background: white;
-  border: 1px solid #d0d5dd;
-  border-radius: 10px;
-  cursor: pointer;
+  padding: 11px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  cursor: not-allowed;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   font-size: 14px;
+  color: var(--text-muted);
 }
 
 .btn-google img {
   width: 18px;
+  filter: grayscale(100%);
 }
 
+/* ===============================
+   FOOTER TEXT
+   =============================== */
+
 .signup-text {
-  margin-top: 18px;
-  font-size: 14px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .signup-text a {
-  color: #1e5eff;
+  color: var(--accent-primary);
   text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
 }
