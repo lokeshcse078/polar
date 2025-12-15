@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect, url_for
 from flask_cors import CORS
 import mysql.connector
 import os
@@ -13,49 +13,48 @@ def get_db_connection():
         user=os.getenv("MYSQLUSER"),
         password=os.getenv("MYSQLPASSWORD"),
         database=os.getenv("MYSQLDATABASE"),
-        port=os.getenv("MYSQLPORT", 3306)
+        port=int(os.getenv("MYSQLPORT", 3306))
     )
 
-# ---------------- ROUTES ---------------- #
-
-@app.route('/login-page')
+# ---------------- ROUTES ----------------
+@app.route("/")
 def login_page():
-    return render_template('index.html')  # templates/login.html
+    return render_template("login.html")
 
-@app.route('/dashboard')
-def dashboard_page():
-    return render_template('dashboard.html')  # templates/dashboard.html
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
 
-# ---------------- Login API ---------------- #
-@app.route('/login', methods=['POST'])
-def login_api():
-    data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+# ---------------- LOGIN HANDLER ----------------
+@app.route("/login", methods=["POST"])
+def login():
+    email = request.form.get("email")
+    password = request.form.get("password")
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Example query for login validation
-    cursor.execute("SELECT * FROM users WHERE email=%s AND password=%s", (email, password))
+    cursor.execute(
+        "SELECT id, name, role FROM users WHERE email=%s AND password=%s",
+        (email, password)
+    )
     user = cursor.fetchone()
 
     cursor.close()
     conn.close()
 
     if user:
-        # Return dummy token (replace with JWT in production)
-        return jsonify({
-            "token": "dummy-jwt-token",
-            "user_id": user["id"],
-            "user_name": user["name"],
-            "role": user["role"]
-        })
+        return render_template(
+            "dashboard.html",
+            name=user["name"],
+            role=user["role"]
+        )
     else:
-        return jsonify({"error": "Invalid credentials"}), 401
+        return render_template(
+            "login.html",
+            error="Invalid email or password"
+        )
 
-# ---------------- Main ---------------- #
+# ---------------- MAIN ----------------
 if __name__ == "__main__":
-    app.run()
-
-
+    app.run(debug=flase)
