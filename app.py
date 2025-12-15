@@ -35,7 +35,7 @@ def login():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT id, name, role FROM users WHERE email=%s AND password=%s",
+        "SELECT name, password FROM users WHERE name=%s AND password=%s",
         (email, password)
     )
     user = cursor.fetchone()
@@ -46,8 +46,7 @@ def login():
     if user:
         return render_template(
             "dashboard.html",
-            name=user["name"],
-            role=user["role"]
+            name=user["name"]
         )
     else:
         return render_template(
@@ -58,4 +57,5 @@ def login():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=flase)
+
 
