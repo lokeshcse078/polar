@@ -52,17 +52,23 @@ def login():
     cursor.close()
     conn.close()
 
+    
     if user:
-        return redirect(url_for("dashboard"))
+        return jsonify({
+            "success": True,
+            "email": user["email"]
+        })
     else:
-        return render_template(
-            "login.html",
-            error="Invalid email or password"
-        )
+        return jsonify({
+            "success": False,
+            "message": "Invalid credentials"
+        }), 401
+
 
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=flase)
+
 
 
 
