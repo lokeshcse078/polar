@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for ,jsonify
 from flask_cors import CORS
 import mysql.connector
 import os
@@ -68,6 +68,7 @@ def login():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=flase)
+
 
 
 
