@@ -23,7 +23,7 @@ def login_page():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("/dashboard.html")
 
 # ---------------- LOGIN HANDLER ----------------
 @app.route("/login", methods=["POST"])
@@ -38,24 +38,24 @@ def login():
         "SELECT name, password FROM users WHERE name=%s AND password=%s",
         (email, password)
     )
-    user = cursor.fetchone()
+    
 
     cursor.close()
     conn.close()
 
     if user:
         return render_template(
-            "dashboard.html",
-            name=user["name"]
+            "/dashboard.html"
         )
     else:
         return render_template(
-            "login.html",
+            "/login.html",
             error="Invalid email or password"
         )
 
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=flase)
+
 
 
