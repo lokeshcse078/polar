@@ -13,7 +13,7 @@ def get_db_connection():
         user=os.getenv("MYSQLUSER"),
         password=os.getenv("MYSQLPASSWORD"),
         database=os.getenv("MYSQLDATABASE"),
-        port=int(os.getenv("MYSQLPORT"))
+        port=int(os.getenv("MYSQLPORT",3306))
     )
 
 # ---------------- ROUTES ----------------
@@ -63,6 +63,7 @@ def login():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=flase)
+
 
 
 
