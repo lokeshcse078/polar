@@ -37,7 +37,7 @@ def dashboard():
 # ---------------- LOGIN HANDLER ----------------
 @app.route("/login", methods=["POST"])
 def login():
-    email = request.form.get("email")
+    name = request.form.get("email")
     password = request.form.get("password")
 
     conn = get_db_connection()
@@ -45,7 +45,7 @@ def login():
 
     cursor.execute(
         "SELECT name FROM users WHERE name=%s AND password=%s",
-        (email, password)
+        (name, password)
     )
     user = cursor.fetchone()
 
@@ -56,7 +56,7 @@ def login():
     if user:
         return jsonify({
             "success": True,
-            "email": user["email"]
+            "email": user["name"]
         })
     else:
         return jsonify({
@@ -68,6 +68,7 @@ def login():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=flase)
+
 
 
 
