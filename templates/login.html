@@ -369,7 +369,7 @@ function handleLogin(event) {
             messageDiv.innerText = "Login successful";
 
             setTimeout(() => {
-                window.location.href = "/templates/dashboard.html";
+                fetch("/dashboard")
             }, 1000);
         }
     })
