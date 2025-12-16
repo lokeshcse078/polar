@@ -14,7 +14,7 @@
 <body>
 
 <!-- ================= SIDEBAR ================= -->
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
   <div class="brand">
     ⚙️ <span>POLAR ANALYTICS</span>
     <small>Service Intelligence</small>
@@ -41,6 +41,9 @@
 
   <!-- HEADER -->
   <header class="topbar">
+    <!-- MOBILE MENU BUTTON -->
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
     <div>
       <h1>Command Dashboard</h1>
       <p>Operational Intelligence Overview</p>
@@ -78,37 +81,43 @@
     <!-- RECENT CUSTOMERS -->
     <div class="panel">
       <h2>Recent Clients</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>COMPANY_ID</th>
-            <th>Company_Name</th>
-            <th>Contact_Person</th>
-            <th>Contact_Phone</th>
-          </tr>
-        </thead>
-        <tbody id="recent-customers-body">
-          <tr><td colspan="4">Loading intelligence…</td></tr>
-        </tbody>
-      </table>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>COMPANY_ID</th>
+              <th>Company_Name</th>
+              <th>Contact_Person</th>
+              <th>Contact_Phone</th>
+            </tr>
+          </thead>
+          <tbody id="recent-customers-body">
+            <tr><td colspan="4">Loading intelligence…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- PENDING SERVICES -->
     <div class="panel">
       <h2>Pending Service Actions</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Instrument</th>
-            <th>Client</th>
-            <th>Report</th>
-          </tr>
-        </thead>
-        <tbody id="pending-services-body">
-          <tr><td colspan="4">Analyzing service logs…</td></tr>
-        </tbody>
-      </table>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Instrument</th>
+              <th>Client</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody id="pending-services-body">
+            <tr><td colspan="4">Analyzing service logs…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </section>
@@ -119,6 +128,11 @@
 <script src="{{ url_for('static', filename='auth.js') }}"></script>
 
 <script>
+/* ---------- MOBILE SIDEBAR ---------- */
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
 /* ---------- AUTH ---------- */
 checkAuth();
 setUserInfo("user-email");
@@ -141,9 +155,6 @@ fetchWithAuth("/api/dashboard/stats")
     document.getElementById("active-instruments").innerText = d.instruments ?? "0";
     document.getElementById("pending-services").innerText = d.pending_services ?? "0";
     document.getElementById("critical-issues").innerText = d.critical ?? "0";
-  })
-  .catch(() => {
-    console.warn("Stats unavailable");
   });
 
 /* ---------- RECENT CUSTOMERS ---------- */
