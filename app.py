@@ -133,8 +133,6 @@ def recent_customers():
         SELECT company_id, company_name, company_type,
                contact_name, contact_phone
         FROM customers
-        ORDER BY company_id DESC
-        LIMIT 5
     """)
 
     data = cursor.fetchall()
@@ -223,6 +221,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
