@@ -103,7 +103,7 @@ def dashboard_stats():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT COUNT(*) FROM customers")
+    cursor.execute("SELECT COUNT(company_id) FROM customers")
     customers = cursor.fetchone()[0]
 
     cursor.execute("SELECT COUNT(*) FROM instruments")
@@ -223,5 +223,6 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
