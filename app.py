@@ -181,18 +181,17 @@ def pending_services():
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("""
-        SELECT s.id, s.i_serial,
-               c.company_name,
-               s.problem_reported,
-               s.start_date
-        FROM service_records s
-        JOIN instruments i ON s.i_serial = i.i_serial
-        JOIN customers c ON i.company_id = c.company_id
-        WHERE s.end_date IS NULL
-        ORDER BY s.start_date DESC
-        LIMIT 5
+    SELECT 
+        s.i_serial,
+        i.company_name,
+        i.m_no,
+        i.i_type,
+        s.status,
+        s.problem_reported
+    FROM service_records s
+    JOIN instruments i 
+        ON s.i_serial = i.i_serial
     """)
-
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -221,6 +220,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
