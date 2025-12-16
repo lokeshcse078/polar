@@ -5,6 +5,8 @@ import mysql.connector
 import os
 
 app = Flask(__name__)
+app.secret_key = "aiuerhiueahriuehriuahiurwdsijfncvvfvvvuvoidsvifnjhfiufdskjfna"
+
 CORS(app)
 #-------------------Authentication-decorater------------------#
 def login_required(f):
@@ -234,6 +236,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
