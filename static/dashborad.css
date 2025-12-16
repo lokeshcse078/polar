@@ -1,95 +1,94 @@
-/* ================= GLOBAL RESET ================= */
+/* ================= ROOT THEME ================= */
+:root {
+  --bg-main:#0c0f14;
+  --bg-panel:#141821;
+  --border:#23283a;
+  --text:#e6ebf5;
+  --muted:#9aa4b2;
+
+  --bronze:#c39a6b;
+  --steel:#7fa1c4;
+  --amber:#e6b566;
+  --crimson:#d96b6b;
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 body {
-  background: #0f172a;
-  color: #e5e7eb;
-  height: 100vh;
-  overflow: hidden;
+  margin: 0;
+  background:
+    radial-gradient(1200px at 10% 10%, #1c2436, transparent),
+    var(--bg-main);
+  color: var(--text);
 }
 
-/* ================= APP LAYOUT ================= */
-.app-layout {
+/* ================= LAYOUT ================= */
+body {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* ================= SIDEBAR ================= */
 .sidebar {
   width: 260px;
-  background: #020617;
-  border-right: 1px solid #1e293b;
+  background: #0f131d;
+  border-right: 1px solid var(--border);
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  padding: 24px;
 }
 
 .brand {
-  font-family: 'Playfair Display', serif;
+  font-family:"Playfair Display";
   font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 40px;
-}
-
-.brand span {
-  margin-left: 6px;
+  margin-bottom: 32px;
 }
 
 .brand small {
   display: block;
-  font-size: 11px;
-  color: #94a3b8;
-  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
 }
 
-/* NAVIGATION */
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.nav-links a {
+nav a {
+  display: block;
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  color: var(--muted);
   text-decoration: none;
-  color: #cbd5f5;
-  padding: 10px 14px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  border-radius: 10px;
+  transition: 0.2s;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-  background: #1e293b;
-  color: #38bdf8;
+nav a.active,
+nav a:hover {
+  background: rgba(255,255,255,.06);
+  color: #fff;
 }
 
-/* SIDEBAR FOOTER */
 .sidebar-footer {
   margin-top: auto;
-  border-top: 1px solid #1e293b;
-  padding-top: 16px;
-  font-size: 13px;
-  color: #94a3b8;
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .logout-btn {
+  margin-top: 8px;
   width: 100%;
-  margin-top: 10px;
   padding: 8px;
-  background: #7c2d12;
+  border-radius: 8px;
   border: none;
+  background: #3b1d1d;
   color: #fff;
-  border-radius: 6px;
   cursor: pointer;
 }
 
 .logout-btn:hover {
-  background: #9a3412;
+  background: #572828;
 }
 
 /* ================= MAIN ================= */
@@ -99,7 +98,7 @@ body {
   overflow-y: auto;
 }
 
-/* ================= TOPBAR ================= */
+/* ================= HEADER ================= */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -107,20 +106,15 @@ body {
   margin-bottom: 32px;
 }
 
-.title-block h1 {
+.topbar h1 {
+  font-family:"Playfair Display";
   font-size: 26px;
-  font-weight: 600;
+  margin: 0;
 }
 
-.title-block p {
+.topbar p {
+  color: var(--muted);
   font-size: 14px;
-  color: #94a3b8;
-  margin-top: 4px;
-}
-
-.date {
-  font-size: 14px;
-  color: #94a3b8;
 }
 
 /* ================= STATS ================= */
@@ -132,29 +126,26 @@ body {
 }
 
 .stat {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
   padding: 20px;
-  border-radius: 12px;
-  background: #020617;
-  border: 1px solid #1e293b;
+  border-radius: 16px;
 }
 
 .stat h3 {
   font-size: 13px;
-  font-weight: 500;
-  color: #94a3b8;
-  margin-bottom: 8px;
+  color: var(--muted);
 }
 
 .stat span {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
 }
 
-/* STAT COLORS */
-.bronze { border-left: 4px solid #f59e0b; }
-.steel  { border-left: 4px solid #38bdf8; }
-.amber  { border-left: 4px solid #f97316; }
-.crimson{ border-left: 4px solid #ef4444; }
+.bronze span{color:var(--bronze)}
+.steel span{color:var(--steel)}
+.amber span{color:var(--amber)}
+.crimson span{color:var(--crimson)}
 
 /* ================= GRID ================= */
 .grid {
@@ -163,74 +154,98 @@ body {
   gap: 24px;
 }
 
-/* ================= PANELS ================= */
+/* ================= PANEL ================= */
 .panel {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
   padding: 20px;
 }
 
 .panel h2 {
+  font-family:"Playfair Display";
   font-size: 16px;
-  margin-bottom: 16px;
-  font-weight: 600;
+  margin-bottom: 14px;
 }
 
 /* ================= TABLE ================= */
-.table-wrapper {
-  overflow-x: auto;
-}
-
-table {
+.panel table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
 
-thead {
-  background: #020617;
-}
-
-th {
+thead th {
   text-align: left;
-  padding: 10px;
-  color: #94a3b8;
-  font-weight: 500;
-  border-bottom: 1px solid #1e293b;
+  padding-bottom: 8px;
+  color: var(--muted);
 }
 
-td {
-  padding: 10px;
-  border-bottom: 1px solid #1e293b;
-  color: #e5e7eb;
+tbody td {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
 }
 
-tbody tr:hover {
-  background: #020617;
-}
-
-/* ================= SCROLLBAR ================= */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* ================= RESPONSIVE SAFETY ================= */
-@media (max-width: 1200px) {
+/* ================= MOBILE ADAPTATION ================= */
+@media (max-width: 1024px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+  }
+
+  nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  nav a {
+    white-space: nowrap;
+    margin-bottom: 0;
+    font-size: 13px;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* TABLE SCROLL FIX */
+  .panel {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 520px;
   }
 }
