@@ -123,12 +123,18 @@ document.getElementById("current-date").innerText =
   date.toLocaleDateString("en-IN", { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
 // Load stats
-fetchWithAuth("/api/dashboard/stats").then(r=>r.json()).then(d=>{
-  total-customers.innerText = d.customers;
-  active-instruments.innerText = d.instruments;
-  pending-services.innerText = d.pending_services;
-  critical-issues.innerText = d.critical;
-});
+fetchWithAuth("/api/dashboard/stats")
+  .then(res => res.json())
+  .then(d => {
+    document.getElementById("total-customers").innerText = d.customers;
+    document.getElementById("active-instruments").innerText = d.instruments;
+    document.getElementById("pending-services").innerText = d.pending_services;
+    document.getElementById("critical-issues").innerText = d.critical;
+  })
+  .catch(err => {
+    console.error("Dashboard stats load failed:", err);
+  });
+
 
 // Recent customers
 fetchWithAuth("/api/customers/recent").then(r=>r.json()).then(data=>{
