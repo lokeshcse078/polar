@@ -38,7 +38,6 @@ def login_page():
     return render_template("login.html")
 
 @app.route("/dashboard")
-@login_required
 def dashboradpage():
     return render_template("dashboard.html")
 # ---------------- LOGIN API ----------------
@@ -111,7 +110,6 @@ def api_services():
 # ==================================================
 
 @app.route("/api/dashboard/stats")
-@login_required
 def dashboard_stats():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -139,7 +137,6 @@ def dashboard_stats():
 
 # ---------------- RECENT CUSTOMERS ----------------
 @app.route("/api/customers/recent")
-@login_required
 def recent_customers():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -191,7 +188,6 @@ def get_instruments(company_id):
 
 # ---------------- PENDING SERVICES ----------------
 @app.route("/api/services/pending")
-@login_required
 def pending_services():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -236,6 +232,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
