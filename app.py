@@ -127,7 +127,7 @@ def dashboard_stats():
 @app.route("/api/customers/recent")
 def recent_customers():
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
 
     cursor.execute("""
         SELECT company_id, company_name, company_type,
@@ -223,6 +223,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
