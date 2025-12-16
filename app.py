@@ -94,7 +94,134 @@ def api_services():
     conn.close()
     return jsonify(data)
 
+# ==================================================
+# DASHBOARD APIs
+# ==================================================
+
+@app.route("/api/dashboard/stats")
+def dashboard_stats():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM customers")
+    customers = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM instruments")
+    instruments = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM service_records WHERE end_date IS NULL")
+    pending_services = cursor.fetchone()[0]
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({
+        "customers": customers,
+        "instruments": instruments,
+        "pending_services": pending_services,
+        "critical": 0
+    })
+
+
+# ---------------- RECENT CUSTOMERS ----------------
+@app.route("/api/customers/recent")
+def recent_customers():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT company_id, company_name, company_type,
+               contact_name, contact_phone
+        FROM customers
+        ORDER BY company_id DESC
+        LIMIT 5
+    """)
+
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return jsonify(data)
+
+
+# ---------------- ALL CUSTOMERS ----------------
+@app.route("/api/customers")
+def get_customers():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM customers")
+    data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return jsonify(data)
+
+
+# ---------------- INSTRUMENTS BY CUSTOMER ----------------
+@app.route("/api/instruments/<int:company_id>")
+def get_instruments(company_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT * FROM instruments
+        WHERE company_id = %s
+    """, (company_id,))
+
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return jsonify(data)
+
+
+# ---------------- PENDING SERVICES ----------------
+@app.route("/api/services/pending")
+def pending_services():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT s.id, s.i_serial,
+               c.company_name,
+               s.problem_reported,
+               s.start_date
+        FROM service_records s
+        JOIN instruments i ON s.i_serial = i.i_serial
+        JOIN customers c ON i.company_id = c.company_id
+        WHERE s.end_date IS NULL
+        ORDER BY s.start_date DESC
+        LIMIT 5
+    """)
+
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return jsonify(data)
+
+
+# ---------------- AMC DETAILS ----------------
+@app.route("/api/amc/<i_serial>")
+def amc_details(i_serial):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT * FROM amc_details
+        WHERE i_serial = %s
+    """, (i_serial,))
+
+    data = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    return jsonify(data)
+
+
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
