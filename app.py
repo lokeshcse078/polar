@@ -112,6 +112,9 @@ def dashboard_stats():
     cursor.execute("SELECT COUNT(*) FROM service_records WHERE end_date IS NULL")
     pending_services = cursor.fetchone()[0]
 
+    cursor.execute("SELECT COUNT(*) FROM service_records WHERE status="critical")
+    critical=cursor.fetchone()[0]
+
     cursor.close()
     conn.close()
 
@@ -119,7 +122,7 @@ def dashboard_stats():
         "customers": customers,
         "instruments": instruments,
         "pending_services": pending_services,
-        "critical": 0
+        "critical": critical
     })
 
 
@@ -221,6 +224,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
