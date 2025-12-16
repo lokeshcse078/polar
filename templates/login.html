@@ -62,9 +62,10 @@ function handleLogin(event) {
     loginBtn.innerText = "Signing in...";
 
     fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",  
+    body: JSON.stringify({ email, password })
     })
     .then(res => res.json())
     .then(data => {
@@ -72,19 +73,16 @@ function handleLogin(event) {
             messageDiv.className = "message error";
             messageDiv.innerText = data.error || "Invalid credentials";
             messageDiv.style.display = "block";
-
+    
             loginBtn.disabled = false;
             loginBtn.innerText = "→ Sign In";
         } else {
-            localStorage.setItem("auth_token", data.token || "logged_in");
-            localStorage.setItem("user_email", data.email);
-
             messageDiv.className = "message success";
             messageDiv.innerText = "Login successful. Redirecting...";
             messageDiv.style.display = "block";
-
+    
             setTimeout(() => {
-                window.location.href = "/api/dashboard";
+                window.location.href = "/api/dashboard";   
             }, 800);
         }
     })
@@ -92,11 +90,11 @@ function handleLogin(event) {
         messageDiv.className = "message error";
         messageDiv.innerText = "Server error. Please try again.";
         messageDiv.style.display = "block";
-
+    
         loginBtn.disabled = false;
         loginBtn.innerText = "→ Sign In";
     });
-}
+
 </script>
 
 </body>
