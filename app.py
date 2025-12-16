@@ -109,7 +109,8 @@ def dashboard_stats():
     cursor.execute("SELECT COUNT(*) FROM instruments")
     instruments = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM service_records WHERE end_date IS NULL")
+    p="not done"
+    cursor.execute("SELECT COUNT(*) FROM service_records WHERE status = %s ",(p))
     pending_services = cursor.fetchone()[0]
 
     cursor.close()
@@ -220,6 +221,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
