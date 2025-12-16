@@ -106,10 +106,12 @@
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Instrument</th>
-              <th>Client</th>
-              <th>Report Date</th>
+              <th>S.NO</th>
+              <th>Company</th>
+              <th>Instrument_name</th>
+              <th>Serial_no</th>
+              <th>Problem </th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody id="pending-services-body">
@@ -188,13 +190,15 @@ fetchWithAuth("/api/services/pending")
       return;
     }
 
-    data.forEach(s => {
+    data.forEach((s,i) => {
       body.innerHTML += `
         <tr>
-          <td>${s.id}</td>
-          <td>${s.i_serial}</td>
+          <td>${i+1}</td>
           <td>${s.company_name}</td>
-          <td>${s.start_date}</td>
+          <td>${s.i_type}</td>
+          <td>${s.i_serial}</td>
+          <td>${s.problem_reported}</td>
+          <td>${s.status}</td>
         </tr>`;
     });
   });
