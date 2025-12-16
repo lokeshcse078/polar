@@ -3,128 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Service Management System</title>
+    <title>Dashboard | Service Management System</title>
 
     <!-- Flask static CSS -->
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-brand">
-                ⚙️ Polar Analytical Service Management
-            </div>
-            <ul class="navbar-menu">
-                <li><a href="/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/customers">Customers</a></li>
-                <li><a href="/instruments">Instruments</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/export">Export Data</a></li>
-                <li id="admin-link" style="display:none;">
-                    <a href="/admin-users">User Management</a>
-                </li>
-            </ul>
-            <div class="user-menu" id="user-info"></div>
-        </div>
-    </nav>
-
-    <!-- Main Container -->
-    <div class="container">
-
-        <!-- Page Header -->
-        <div class="page-header">
-            <div>
-                <h1>Dashboard</h1>
-                <p>Welcome to your Service Management System</p>
-            </div>
-            <div style="text-align:right;">
-                <p id="current-date"></p>
-            </div>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-brand">
+            ⚙️ Polar Analytical – Service Management
         </div>
 
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card primary">
-                <h3>Total Customers</h3>
-                <div class="number" id="total-customers">-</div>
-            </div>
-            <div class="stat-card success">
-                <h3>Active Instruments</h3>
-                <div class="number" id="active-instruments">-</div>
-            </div>
-            <div class="stat-card warning">
-                <h3>Pending Services</h3>
-                <div class="number" id="pending-services">-</div>
-            </div>
-            <div class="stat-card danger">
-                <h3>Critical Issues</h3>
-                <div class="number">0</div>
-            </div>
-        </div>
+        <ul class="navbar-menu">
+            <li><a href="/dashboard" class="active">Dashboard</a></li>
+            <li><a href="/customers">Customers</a></li>
+            <li><a href="/instruments">Instruments</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/export">Export</a></li>
+            <li id="admin-link" style="display:none;">
+                <a href="/admin_users">User Management</a>
+            </li>
+        </ul>
 
-        <!-- Quick Actions -->
-        <div class="card">
-            <div class="card-header"><h2>Quick Actions</h2></div>
-            <div class="card-body">
-                <div class="quick-actions">
-                    <a href="/add-customer" class="btn btn-primary">➕ Add Customer</a>
-                    <a href="/add-instrument" class="btn btn-primary">🔧 Add Instrument</a>
-                    <a href="/add-service" class="btn btn-success">✔️ Record Service</a>
-                    <a href="/reports" class="btn btn-secondary">📊 View Reports</a>
-                </div>
-            </div>
+        <div class="user-menu">
+            <span id="user-email"></span>
+            <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
         </div>
+    </div>
+</nav>
 
-        <!-- Recent Customers -->
-        <div class="card">
-            <div class="card-header"><h2>Recent Customers</h2></div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>Mobile</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="recent-customers-body">
-                        <tr><td colspan="7" style="text-align:center;">Loading...</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<!-- ================= MAIN ================= -->
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Service overview and quick actions</p>
         </div>
-
-        <!-- Pending Services -->
-        <div class="card">
-            <div class="card-header"><h2>Pending Services</h2></div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Instrument</th>
-                            <th>Customer</th>
-                            <th>Type</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pending-services-body">
-                        <tr><td colspan="7" style="text-align:center;">Loading...</td></tr>
-                    </tbody>
-                </table>
-            </div>
+        <div>
+            <p id="current-date"></p>
         </div>
-
     </div>
 
- 
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card primary">
+            <h3>Total Customers</h3>
+            <div class="number" id="total-customers">0</div>
+        </div>
+        <div class="stat-card success">
+            <h3>Active Instruments</h3>
+            <div class="number" id="active-instruments">0</div>
+        </div>
+        <div class="stat-card warning">
+            <h3>Pending Services</h3>
+            <div class="number" id="pending-services">0</div>
+        </div>
+        <div class="stat-card danger">
+            <h3>Critical Issues</h3>
+            <div class="number">0</div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Quick Actions</h2>
+        </div>
+        <div class="card-body quick-actions">
+            <a href="/add_customer" class="btn btn-primary">➕ Add Customer</a>
+            <a href="/add_instrument" class="btn btn-primary">🔧 Add Instrument</a>
+            <a href="/add_service" class="btn btn-success">✔️ Record Service</a>
+            <a href="/reports" class="btn btn-secondary">📊 Reports</a>
+        </div>
+    </div>
+
+    <!-- Recent Customers -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Recent Customers</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-customers-body">
+                    <tr>
+                        <td colspan="6" class="text-muted">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pending Services -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Pending Services</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Instrument</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="pending-services-body">
+                    <tr>
+                        <td colspan="6" class="text-muted">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="{{ url_for('static', filename='auth.js') }}"></script>
+
+<script>
+    checkAuth();
+
+    document.getElementById("user-email").innerText =
+        localStorage.getItem("user_email") || "";
+
+    const today = new Date();
+    document.getElementById("current-date").innerText =
+        today.toLocaleDateString("en-IN", { dateStyle: "full" });
+
+    const role = localStorage.getItem("user_role");
+    if (role === "Admin") {
+        document.getElementById("admin-link").style.display = "block";
+    }
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "/";
+    }
+
+    // ===== Load Data =====
+    window.onload = () => {
+        loadStats();
+        loadRecentCustomers();
+        loadPendingServices();
+    };
+
+    function loadStats() {
+        fetchWithAuth("/api/customers")
+            .then(r => r.json())
+            .then(d => document.getElementById("total-customers").innerText = d.length);
+
+        fetchWithAuth("/api/instruments")
+            .then(r => r.json())
+            .then(d => document.getElementById("active-instruments").innerText = d.length);
+
+        fetchWithAuth("/api/services?status=Pending")
+            .then(r => r.json())
+            .then(d => document.getElementById("pending-services").innerText = d.length);
+    }
+
+    function loadRecentCustomers() {
+        fetchWithAuth("/api/customers")
+            .then(r => r.json())
+            .then(data => {
+                const tbody = document.getElementById("recent-customers-body");
+                tbody.innerHTML = "";
+
+                data.slice(-5).reverse().forEach(c => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${c.customer_id}</td>
+                            <td>${c.customer_name}</td>
+                            <td>${c.contact_person || "-"}</td>
+                            <td>${c.mobile || "-"}</td>
+                            <td>${c.status}</td>
+                            <td>
+                                <a class="btn btn-secondary btn-sm" href="/view_customer?id=${c.customer_id}">
+                                    View
+                                </a>
+                            </td>
+                        </tr>`;
+                });
+            });
+    }
+
+    function loadPendingServices() {
+        fetchWithAuth("/api/services?status=Pending")
+            .then(r => r.json())
+            .then(data => {
+                const tbody = document.getElementById("pending-services-body");
+                tbody.innerHTML = "";
+
+                data.slice(0,5).forEach(s => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${s.service_id}</td>
+                            <td>${s.instrument_name}</td>
+                            <td>${s.customer_name}</td>
+                            <td>${s.service_type}</td>
+                            <td>${s.service_date}</td>
+                            <td>${s.status}</td>
+                        </tr>`;
+                });
+            });
+    }
+</script>
+
 </body>
 </html>
