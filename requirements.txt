@@ -3,3 +3,5 @@ Flask-SQLAlchemy
 mysql-connector-python
 Flask-Cors
 gunicorn
+flask_jwt_extended
+
