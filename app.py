@@ -73,7 +73,6 @@ def api_instruments():
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM instruments WHERE status='Active'")
     data = cursor.fetchall()
-    cursor.close()
     conn.close()
     return jsonify(data)
 
