@@ -60,30 +60,6 @@ function logout() {
 /* ------------------------------------------
    FETCH WITH AUTH
 ------------------------------------------ */
-function fetchWithAuth(url, options = {}) {
-    const token = localStorage.getItem("auth_token");
-
-    const headers = {
-        "Content-Type": "application/json",
-        ...(options.headers || {})
-    };
-
-    // token is logical (session-based), not JWT yet
-    if (token) {
-        headers["Authorization"] = "Bearer " + token;
-    }
-
-    return fetch(API_URL + url, {
-        ...options,
-        headers
-    }).then(res => {
-        if (res.status === 401) {
-            logout();
-            throw new Error("Unauthorized");
-        }
-        return res;
-    });
-}
 
 /* ------------------------------------------
    OPTIONAL UI HELPERS
