@@ -80,10 +80,7 @@ function handleLogin(event) {
             messageDiv.className = "message success";
             messageDiv.innerText = "Login successful. Redirecting...";
             messageDiv.style.display = "block";
-
-            setTimeout(() => {
-                window.location.href = "/dashboard";
-            }, 700);
+            fetch("/dashboard")
         }
     })
     .catch(() => {
