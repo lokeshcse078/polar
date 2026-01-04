@@ -6,6 +6,15 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+app.secret_key = os.environ.get("SECRET_KEY", "change-this-secret")
+
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=False  # set True in HTTPS
+)
+
+
 # ---------------- MySQL Connection ----------------
 def get_db_connection():
     try:
@@ -20,6 +29,19 @@ def get_db_connection():
     except Exception as e:
         print("DB Connection Error:", e)
         return None
+
+# ==================================================
+# LOGIN REQUIRED DECORATOR
+# ==================================================
+def login_required(view_func):
+    @wraps(view_func)
+    def wrapped(*args, **kwargs):
+        if "user_email" not in session:
+            if request.accept_mimetypes.accept_html:
+                return redirect(url_for("login_page"))
+            return jsonify({"error": "Authentication required"}), 401
+        return view_func(*args, **kwargs)
+    return wrapped
 
 # ---------------- ROUTES ----------------
 @app.route("/")
@@ -51,10 +73,12 @@ def login_api():
     conn.close()
 
     if user:
-        return jsonify({"success": True, "email": user["name"]})
+        session["user_email"] = user["name"]
+        session["logged_in"] = True
+        return jsonify({"success": True})
     else:
         return jsonify({"success": False, "error": "Invalid email or password"}), 401
-
+        
 # ---------------- Customers ----------------
 @app.route("/api/customers")
 def api_customers():
@@ -125,6 +149,7 @@ def dashboard_stats():
 
 # ---------------- RECENT CUSTOMERS ----------------
 @app.route("/api/customers/recent")
+@login_required
 def recent_customers():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -220,6 +245,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
