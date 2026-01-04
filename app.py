@@ -54,6 +54,11 @@ def login_page():
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login_page"))
+
 # ---------------- LOGIN API ----------------
 @app.route("/api/login", methods=["POST"])
 def login_api():
@@ -247,6 +252,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
