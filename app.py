@@ -12,7 +12,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "change-this-secret")
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=False  # set True in HTTPS
+    SESSION_COOKIE_SECURE=True  # set True in HTTPS
 )
 
 
@@ -247,6 +247,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
