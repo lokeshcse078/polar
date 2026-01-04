@@ -54,7 +54,7 @@ function getCurrentUser() {
 function logout() {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("user_email");
-    window.location.href = "/";
+    window.location.href = "/logout";
 }
 
 /* ------------------------------------------
