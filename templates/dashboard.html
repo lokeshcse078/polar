@@ -131,9 +131,7 @@
 <script src="{{ url_for('static', filename='auth.js') }}"></script>
 
 <script>
-/* ---------- AUTH ---------- */
-checkAuth();
-setUserInfo("user-email");
+
 
 /* ---------- DATE ---------- */
 const date = new Date();
@@ -146,7 +144,7 @@ document.getElementById("current-date").innerText =
   });
 
 /* ---------- DASHBOARD STATS ---------- */
-fetchWithAuth("/api/dashboard/stats")
+fetch("/api/dashboard/stats")
   .then(res => res.json())
   .then(d => {
     document.getElementById("total-customers").innerText = d.customers ?? "0";
@@ -156,7 +154,7 @@ fetchWithAuth("/api/dashboard/stats")
   });
 
 /* ---------- RECENT CUSTOMERS ---------- */
-fetchWithAuth("/api/customers/recent")
+fetch("/api/customers/recent")
   .then(r => r.json())
   .then(data => {
     const body = document.getElementById("recent-customers-body");
@@ -179,7 +177,7 @@ fetchWithAuth("/api/customers/recent")
   });
 
 /* ---------- PENDING SERVICES ---------- */
-fetchWithAuth("/api/services/pending")
+fetch("/api/services/pending")
   .then(r => r.json())
   .then(data => {
     const body = document.getElementById("pending-services-body");
