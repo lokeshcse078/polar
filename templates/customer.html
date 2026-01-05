@@ -98,12 +98,12 @@
 /* Add customer details in data */
 function load(){
 const details = {
-        company_id: document.getElementById("cid").value,
-        company_name: document.getElementById("cname").value,
-        company_type: document.getElementById("ctype").value,
-        conatct_name: document.getElementById("ccname").value,
-        cantact_mail: document.getElementById("cmail").value,
-        contact_phone: document.getElementById("phone").value
+        cid: document.getElementById("cid").value,
+        cname: document.getElementById("cname").value,
+        ctype: document.getElementById("ctype").value,
+        cname: document.getElementById("ccname").value,
+        cmail: document.getElementById("cmail").value,
+        cphone: document.getElementById("phone").value
     };
 
 fetch("/api/add_customers", {
