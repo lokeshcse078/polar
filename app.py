@@ -192,15 +192,15 @@ def add_customers():
 
     cursor.execute("""
         INSERT INTO customers
-        ( company_name, company_type, conatct_name, cantact_mail, contact_phone)
-        VALUES (%s, %s, %s, %s, %s)
+        ( company_id, company_name, company_type, conatct_name, cantact_mail, contact_phone)
+        VALUES (%s,%s, %s, %s, %s, %s)
     """, (
-
-        data["company_name"],
-        data["company_type"],
-        data["conatct_name"],
-        data["cantact_mail"],
-        data["contact_phone"]
+        data["cid"],
+        data["cname"],
+        data["ctype"],
+        data["ccname"],
+        data["cmail"],
+        data["cphone"]
        ))
 
     conn.commit()
@@ -274,6 +274,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
