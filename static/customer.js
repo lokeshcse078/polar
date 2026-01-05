@@ -1,3 +1,9 @@
+/*To call load automatically when page loaded */
+document.addEventListener("DOMContentLoaded",() => {
+  load();
+}
+
+/* Load function to add data to the table */
 function load(){
 fetch("/api/customer")
   .then(r => r.json())
