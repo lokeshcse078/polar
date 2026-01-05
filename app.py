@@ -91,16 +91,6 @@ def login_api():
     else:
         return jsonify({"success": False, "error": "Invalid email or password"}), 401
         
-# ---------------- Customers ----------------
-@app.route("/api/customers")
-def api_customers():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM customers ORDER BY company_id DESC")
-    data = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(data)
 
 # ---------------- Instruments ----------------
 @app.route("/api/instruments")
@@ -179,24 +169,22 @@ def recent_customers():
     return jsonify(data)
 
 
-# ---------------- ALL CUSTOMERS ----------------
+# ---------------- Customers ----------------
 @app.route("/api/customers")
 @login_required
-def get_customers():
+def api_customers():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM customers")
+    cursor.execute("SELECT * FROM customers ORDER BY company_id DESC")
     data = cursor.fetchall()
-
     cursor.close()
     conn.close()
     return jsonify(data)
 
 # ---------------- ADD CUSTOMERS ----------------
-@app.route("/api/customers", methods=["POST"])
+@app.route("/api/add_customers", methods=["POST"])
 @login_required
-def add_customer():
+def add_customers():
     data = request.json
 
     conn = get_db_connection()
@@ -286,6 +274,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
