@@ -1,0 +1,77 @@
+/* ================= CUSTOMER FORM ================= */
+
+.customer-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 22px;
+  margin-top: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.form-group input,
+.form-group textarea {
+  background: #0f131d;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--steel);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+/* ================= SAVE BUTTON ================= */
+
+.btn-save {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: var(--amber);
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  opacity: 0.9;
+}
+
+/* ================= TABLE EMPTY STATE ================= */
+
+.empty-row td {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .customer-form {
+    grid-template-columns: 1fr;
+  }
+}
