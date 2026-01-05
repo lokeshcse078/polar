@@ -94,13 +94,11 @@
 </body>
 <!--<script src="{{ url_for('static',filename='customer.js') }}"></script>-->
 <script>
-    fetch("/api/customer")
+    fetch("/api/customers")
   .then(r => r.json())
   .then(data => {
     const tbody = document.getElementById("customerTableBody");
-    body.innerHTML = "";
-
-tbody.innerHTML = "";
+    tbody.innerHTML = "";
 
 if (data.length === 0) {
     // show NOTHING when empty (as requested)
