@@ -1,5 +1,5 @@
 function load(){
-fetch("/api/customers")
+fetch("/api/customer")
   .then(r => r.json())
   .then(data => {
     const tbody = document.getElementById("customerTableBody");
