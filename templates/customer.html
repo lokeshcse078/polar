@@ -96,7 +96,7 @@
 <script>
 
 /* Add customer details in data */
-const data = {
+const details = {
         company_id: document.getElementById("cid").value,
         company_name: document.getElementById("cname").value,
         company_type: document.getElementById("ctype").value,
@@ -110,7 +110,7 @@ const data = {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(details)
     })
     .then(res => res.json())
     .then(response => {
