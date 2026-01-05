@@ -176,6 +176,7 @@ def recent_customers():
 
 # ---------------- ALL CUSTOMERS ----------------
 @app.route("/api/customers")
+@login_required
 def get_customers():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -252,6 +253,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
