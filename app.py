@@ -59,7 +59,7 @@ def logout():
     session.clear()
     return redirect(url_for("login_page"))
     
-@app.route("/customers")
+@app.route("/customer")
 @login_required
 def customers():
     return render_template("customer.html")
@@ -258,6 +258,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
