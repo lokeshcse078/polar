@@ -193,6 +193,34 @@ def get_customers():
     conn.close()
     return jsonify(data)
 
+# ---------------- ADD CUSTOMERS ----------------
+@app.route("/api/customers", methods=["POST"])
+@login_required
+def add_customer():
+    data = request.json
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO customers
+        (company_id, company_name, company_type, conatct_name, cantact_mail, contact_phone)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (
+        data["company_id"],
+        data["company_name"],
+        data["company_type"],
+        data["conatct_name"],
+        data["cantact_mail"],
+        data["contact_phone"]
+       ))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Customer added successfully"})
+
 
 # ---------------- INSTRUMENTS BY CUSTOMER ----------------
 @app.route("/api/instruments/<int:company_id>")
@@ -258,6 +286,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
