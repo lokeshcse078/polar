@@ -185,8 +185,10 @@ def api_customers():
 @app.route("/api/add_customers", methods=["POST"])
 @login_required
 def add_customers():
-    data = request.json
+    data = request.get_json(silent=True)
 
+    if not data:
+        return jsonify({"error": "No JSON received"}), 400
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -274,6 +276,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
