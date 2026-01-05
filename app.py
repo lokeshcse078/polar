@@ -96,7 +96,7 @@ def login_api():
 def api_customers():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM customers ORDER BY customer_id DESC")
+    cursor.execute("SELECT * FROM customers ORDER BY company_id DESC")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -258,6 +258,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
