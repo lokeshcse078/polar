@@ -6,6 +6,64 @@
   gap: 18px 22px;
   margin-top: 12px;
 }
+/* Base button reset (optional but recommended) */
+.btn-edit,
+.btn-delete {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.1s ease;
+}
+
+/* ---------------- EDIT BUTTON ---------------- */
+.btn-edit {
+    background-color: #1f2937;   /* dark slate */
+    color: #e5e7eb;              /* light gray text */
+    box-shadow: 0 0 0 1px #374151 inset;
+}
+
+.btn-edit:hover {
+    background-color: #2563eb;   /* blue highlight */
+    box-shadow: 0 0 0 1px #3b82f6 inset;
+}
+
+.btn-edit:active {
+    transform: scale(0.97);
+    background-color: #1d4ed8;
+}
+
+.btn-edit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #60a5fa;
+}
+
+/* ---------------- DELETE BUTTON ---------------- */
+.btn-delete {
+    background-color: #1f2937;   /* dark slate */
+    color: #fecaca;              /* soft red text */
+    box-shadow: 0 0 0 1px #374151 inset;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;   /* red danger */
+    color: #ffffff;
+    box-shadow: 0 0 0 1px #ef4444 inset;
+}
+
+.btn-delete:active {
+    transform: scale(0.97);
+    background-color: #b91c1c;
+}
+
+.btn-delete:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #f87171;
+}
 
 .form-group {
   display: flex;
