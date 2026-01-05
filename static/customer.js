@@ -19,15 +19,15 @@ if (data.length === 0) {
     data.forEach(c => {
         tbody.innerHTML += `
             <tr>
-                <td>${c.id}</td>
-                <td>${c.c_name}</td>
-                <td>${c.c_type}</td>
-                <td>${c.c_name}</td>
-                <td>${c.c_mail}</td>
-                <td>${c.c_phone}</td>
+                <td>${c.company_id}</td>
+                <td>${c.company_name}</td>
+                <td>${c.company_type}</td>
+                <td>${c.conatct_name}</td>
+                <td>${c.cantact_mail}</td>
+                <td>${c.contact_phone}</td>
                 <td class="action-col">
-                    <button class="btn-edit" data-id="${c.id}">Edit</button>
-                    <button class="btn-delete" data-id="${c.id}">Delete</button>
+                    <button class="btn-edit" data-id="${c.company_id}">Edit</button>
+                    <button class="btn-delete" data-id="${c.company_id}">Delete</button>
                 </td>
             </tr>
         `;
