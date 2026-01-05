@@ -54,36 +54,36 @@
 
             <form class="customer-form">
                 <div class="form-group">
-                    <label>C_ID *</label>
+                    <label id="cid">C_ID *</label>
                     <input type="text" required>
                 </div>
               
                 <div class="form-group">
-                    <label>Company Name *</label>
+                    <label id="cname">Company Name *</label>
                     <input type="text" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Company Type *</label>
+                    <label id="ctype">Company Type *</label>
                     <input type="text" required>
                 </div>
               
                 <div class="form-group">
-                    <label>Contact Name *</label>
+                    <label id="ccname">Contact Name *</label>
                     <input type="text" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Email *</label>
+                    <label id="cmail">Email *</label>
                     <input type="email" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Phone *</label>
+                    <label id="phone">Phone *</label>
                     <input type="tel" required>
                 </div>
 
-                <button type="submit" class="btn-save">
+                <button type="submit" class="btn-save" onclick='saved()'>
                     Save Customer
                 </button>
             </form>
@@ -94,7 +94,36 @@
 </body>
 <!--<script src="{{ url_for('static',filename='customer.js') }}"></script>-->
 <script>
-    fetch("/api/customers")
+
+/* Add customer details in data */
+const data = {
+        company_id: document.getElementById("cid").value,
+        company_name: document.getElementById("cname").value,
+        company_type: document.getElementById("ctype").value,
+        conatct_name: document.getElementById("ccname").value,
+        cantact_mail: document.getElementById("cmail").value,
+        contact_phone: document.getElementById("phone").value
+    };
+
+    fetch("/api/customers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(response => {
+        alert(response.message);
+        document.getElementById("customerForm").reset();
+    
+    })
+    .catch(err => console.error("Error:", err));
+});   
+}
+
+/* Load Customer Table */
+fetch("/api/customers")
   .then(r => r.json())
   .then(data => {
     const tbody = document.getElementById("customerTableBody");
@@ -121,5 +150,6 @@ if (data.length === 0) {
     });
 }
 })
+.catch(err => console.error("Error:", err));
 </script>
 </html>
