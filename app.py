@@ -61,7 +61,7 @@ def logout():
     
 @app.route("/customer")
 @login_required
-def customers():
+def customer():
     return render_template("customer.html")
 
 # ---------------- LOGIN API ----------------
@@ -258,6 +258,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
