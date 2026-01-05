@@ -95,32 +95,6 @@
 <!--<script src="{{ url_for('static',filename='customer.js') }}"></script>-->
 <script>
 
-/* Add customer details in data */
-const details = {
-        company_id: document.getElementById("cid").value,
-        company_name: document.getElementById("cname").value,
-        company_type: document.getElementById("ctype").value,
-        conatct_name: document.getElementById("ccname").value,
-        cantact_mail: document.getElementById("cmail").value,
-        contact_phone: document.getElementById("phone").value
-    };
-
-    fetch("/api/add_customers", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(details)
-    })
-    .then(res => res.json())
-    .then(response => {
-        alert(response.message);
-        document.getElementById("customerForm").reset();
-    
-    })
-    .catch(err => console.error("Error:", err));
-});   
-
 /* Load Customer Table */
 fetch("/api/customers")
   .then(r => r.json())
