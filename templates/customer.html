@@ -183,7 +183,7 @@ if (data.length === 0) {
 
 function editCustomer(id) {
     // find customer from loaded data (example: customers array)
-    const customer = customers.find(c => c.company_id === id);
+    const customer = customers.find(c => String(c.company_id) === String(id));
     if (!customer) return;
 
     document.getElementById("edit_company_id").value = customer.company_id;
