@@ -186,7 +186,21 @@ if (data.length === 0) {
 }
 })
 }
-    
+/* Delete Customers */
+function deleteCustomer(id) {
+    const t = id;
+    fetch("/api/del_cus" {
+        method : "POST",
+        headers : { "Content-Type":"application/json"},
+        body : JSON.stringify(t)
+        })
+        .then(res => res.json())
+        .then(response => {
+            alert(response.message);
+            loadCustomers();
+        });
+}
+/* Edit Customers */
 function editCustomer(id) {
     // find customer from loaded data (example: customers array)
     const customer = customers.find(c => String(c.company_id) === String(id));
