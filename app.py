@@ -225,7 +225,7 @@ def add_customers():
     cursor.execute("""
         UPDATE customers
         SET company_name = data["company_name"], company_type = data["company_type"], conatct_name = data["contact_name"], cantact_mail = data["contact_mail"], contact_phone= data["contact_phone"] WHERE customer_id = data["company_id"]
-
+    """)
     conn.commit()
     cursor.close()
     conn.close()
@@ -275,54 +275,6 @@ def pending_services():
     return jsonify(data)
 
 
-# ---------------- AMC DETAILS ----------------
-@app.route("/api/amc/<i_serial>")
-def amc_details(i_serial):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("""
-        SELECT * FROM amc_details
-        WHERE i_serial = %s
-    """, (i_serial,))
-
-    data = cursor.fetchone()
-    cursor.close()
-    conn.close()
-
-    return jsonify(data)
-
-
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
