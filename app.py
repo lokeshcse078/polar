@@ -246,7 +246,7 @@ def update_customers():
 
     return jsonify({"message": "Customer updated successfully"})
 
-# ---------------- UPDATE CUSTOMERS ----------------
+# ---------------- DELETE CUSTOMERS ----------------
 @app.route("/api/del_cus", methods=["POST"])
 @login_required
 def del_cus():
@@ -258,7 +258,7 @@ def del_cus():
     cursor = conn.cursor()
 
     cursor.execute(""" DELETE FROM customers where company_id=%s
-    """,(data["company_id"]))
+    """,(data["company_id"],))
 
     conn.commit()
     cursor.close()
@@ -312,6 +312,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
