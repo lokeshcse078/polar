@@ -122,6 +122,7 @@
 </body>
 <!--<script src="{{ url_for('static',filename='customer.js') }}"></script>-->
 <script>
+let customers = [];
 
 /* Add customer details in data */
 function load(){
@@ -156,6 +157,7 @@ fetch("/api/customers")
   .then(data => {
     const tbody = document.getElementById("customerTableBody");
     tbody.innerHTML = "";
+    customers=data;
 
 if (data.length === 0) {
     // show NOTHING when empty (as requested)
