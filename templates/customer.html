@@ -149,6 +149,7 @@ fetch("/api/add_customers", {
     .then(response => {
         alert(response.message);
         document.getElementById("customerForm").reset();
+        loadCustomers();
     
     })
     .catch(err => console.error("Error:", err));
