@@ -223,9 +223,23 @@ def update_customers():
     cursor = conn.cursor()
 
     cursor.execute("""
-        UPDATE customers
-        SET company_name = data["company_name"], company_type = data["company_type"], conatct_name = data["contact_name"], cantact_mail = data["contact_mail"], contact_phone= data["contact_phone"] WHERE customer_id = data["company_id"]
-    """)
+    UPDATE customers
+    SET
+        company_name = %s,
+        company_type = %s,
+        conatct_name = %s,
+        cantact_mail = %s,
+        contact_phone = %s
+    WHERE customer_id = %s
+""", (
+    data["company_name"],
+    data["company_type"],
+    data["contact_name"],
+    data["contact_mail"],
+    data["contact_phone"],
+    data["company_id"]
+))
+
     conn.commit()
     cursor.close()
     conn.close()
@@ -278,4 +292,5 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
