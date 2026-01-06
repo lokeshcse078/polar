@@ -191,7 +191,7 @@ function deleteCustomer(id) {
     if (!confirm("Are you sure you want to delete this customer?")) {
         return;
     }
-    fetch("/api/del_cus" {
+    fetch("/api/del_cus" ,{
         method : "POST",
         headers : { "Content-Type":"application/json"},
         body : JSON.stringify({company_id: id})
