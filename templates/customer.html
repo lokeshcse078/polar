@@ -222,7 +222,8 @@ function updateCustomer() {
         body: JSON.stringify(data)
     })
     .then(res => res.json())
-    .then(() => {
+    .then( response => {
+        alert(response.message);
         closeEditCard();
         loadCustomers(); // reload table
     });
