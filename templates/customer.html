@@ -216,7 +216,7 @@ function updateCustomer() {
         contact_phone: document.getElementById("edit_contact_phone").value
     };
 
-    fetch("/api/update_customer", {
+    fetch("/api/update_customers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
