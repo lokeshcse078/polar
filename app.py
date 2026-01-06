@@ -211,7 +211,27 @@ def add_customers():
 
     return jsonify({"message": "Customer added successfully"})
 
+# ---------------- UPDATE CUSTOMERS ----------------
+@app.route("/api/update_customers", methods=["POST"])
+@login_required
+def add_customers():
+    data = request.get_json(silent=True)
 
+    if not data:
+        return jsonify({"error": "No JSON received"}), 400
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE customers
+        SET company_name = data["company_name"], company_type = data["company_type"], conatct_name = data["contact_name"], cantact_mail = data["contact_mail"], contact_phone= data["contact_phone"] WHERE customer_id = data["company_id"]
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Customer updated successfully"})
+    
 # ---------------- INSTRUMENTS BY CUSTOMER ----------------
 @app.route("/api/instruments/<int:company_id>")
 def get_instruments(company_id):
@@ -276,6 +296,7 @@ def amc_details(i_serial):
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
