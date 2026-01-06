@@ -245,6 +245,26 @@ def update_customers():
     conn.close()
 
     return jsonify({"message": "Customer updated successfully"})
+
+# ---------------- UPDATE CUSTOMERS ----------------
+@app.route("/api/del_cus", methods=["POST"])
+@login_required
+def del_cus():
+    data = request.get_json(silent=True)
+
+    if not data:
+        return jsonify({"error": "No JSON received"}), 400
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(""" DELETE FROM customers where company_id=%s
+    """,(data["company_id"]))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Customer deleted successfully"})
     
 # ---------------- INSTRUMENTS BY CUSTOMER ----------------
 @app.route("/api/instruments/<int:company_id>")
@@ -292,6 +312,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
