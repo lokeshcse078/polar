@@ -230,7 +230,7 @@ def update_customers():
         conatct_name = %s,
         cantact_mail = %s,
         contact_phone = %s
-    WHERE customer_id = %s
+    WHERE company_id = %s
 """, (
     data["company_name"],
     data["company_type"],
@@ -292,5 +292,6 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
