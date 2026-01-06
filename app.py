@@ -214,7 +214,7 @@ def add_customers():
 # ---------------- UPDATE CUSTOMERS ----------------
 @app.route("/api/update_customers", methods=["POST"])
 @login_required
-def add_customers():
+def update_customers():
     data = request.get_json(silent=True)
 
     if not data:
@@ -278,3 +278,4 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
