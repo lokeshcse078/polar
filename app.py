@@ -56,7 +56,7 @@ def dashboard():
 
 @app.route("/instrument")
 @login_required
-def dashboard():
+def instrument():
     return render_template("instruments.html")
 
 @app.route("/logout")
@@ -343,6 +343,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
