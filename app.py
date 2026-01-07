@@ -175,7 +175,7 @@ def recent_customers():
 def api_customers():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM customers ORDER BY company_id DESC")
+    cursor.execute("SELECT * FROM customers ORDER BY company_id ASEC")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -266,22 +266,48 @@ def del_cus():
 
     return jsonify({"message": "Customer deleted successfully"})
     
-# ---------------- INSTRUMENTS BY CUSTOMER ----------------
-@app.route("/api/instruments/<int:company_id>")
-def get_instruments(company_id):
+# ---------------- INSTRUMENTS ----------------
+@app.route("/api/instruments")
+@login_required
+def api_instruments():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("""
-        SELECT * FROM instruments
-        WHERE company_id = %s
-    """, (company_id,))
-
+    cursor.execute("SELECT * FROM instruments ORDER BY company_id ASEC")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
-
     return jsonify(data)
+
+# ---------------- ADD INSTRUMENTS ----------------
+@app.route("/api/add_instruments", methods=["POST"])
+@login_required
+def add_customers():
+    data = request.get_json(silent=True)
+
+    if not data:
+        return jsonify({"error": "No JSON received"}), 400
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO instruments
+        ( i_serial, company_id, i_id, m_no, i_type, puchase_date, company_name)
+        VALUES (%s,%s, %s, %s, %s, %s ,%s)
+    """, (
+        data["sno"],
+        data["cid"],
+        data["iid"],
+        data["mno"],
+        data["itype"],
+        data["pdate"],
+        data["cname"]
+       ))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Instrument added successfully"})
 
 
 # ---------------- PENDING SERVICES ----------------
@@ -312,6 +338,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
