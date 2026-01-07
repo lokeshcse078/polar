@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>👥Customer Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Main Dashboard Theme -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='dashborad.css') }}">
+
+    <!-- Customer Page Styles -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='instrument.css') }}">
+    
+</head>
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+<aside class="sidebar">
+  <div class="brand">
+    ⚙️ <span>POLAR ANALYTICS</span>
+    <small>Service Intelligence</small>
+  </div>
+
+  <nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('customer') }}">Customers</a>
+    <a class="active" href="{{ url_for('instrument') }}">Instruments</a>
+    <a href="#">Service Records</a>
+    <a href="#">Data Export</a>
+    <a href="#">User Control</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div id="user-email">—</div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <small>AI Engine • v1.0</small>
+  </div>
+</aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main">
+
+        <!-- ================= HEADER ================= -->
+        <div class="topbar">
+            <div>
+                <h1>Customers</h1>
+                <p>View and manage customer instrument records</p>
+            </div>
+        </div>
+
+        <!-- ================= INSTRUMENT LIST ================= -->
+        <div class="panel">
+            <h2>Instrument List</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>c_ID</th>
+                        <th>Company Name</th>
+                        <th>Serial NO</th>
+                        <th>Instru_ID</th>
+                        <th>Purchase Date</th>
+                        <th>Model_no</th>
+                        <th>Instrument_Type</th>
+                        <th class="action-col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="instrumentTableBody">
+                    <tr class="empty-row">
+                        <td colspan="8">No records found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ================= ADD INSTRUMENT ================= -->
+        <div class="panel">
+            <h2>Add New Customer</h2>
+
+            <form class="instrumnet-form" id="instrumentForm">
+                <div class="form-group">
+                    <label >C_ID *</label>
+                    <input id="cid" type="text" required>
+                </div>
+              
+                <div class="form-group">
+                    <label >Company Name *</label>
+                    <input id="cname" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label >Serial NO *</label>
+                    <input id="s_no" type="text" required>
+                </div>
+              
+                <div class="form-group">
+                    <label >Instrumnet ID *</label>
+                    <input id="iid" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label >Model NO *</label>
+                    <input id="mno" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label >Instrumnet Type*</label>
+                    <input id="itype" type="text" required>
+                </div>
+
+                
+                <div class="form-group">
+                    <label >Purchase DAte*</label>
+                    <input id="pdate" type="date" required>
+                </div>
+
+                <button type="button" class="btn-save" onclick='load()'>
+                    Save Instrument
+                </button>
+            </form>
+        </div>
+
+    </main>
+
+</body>
+<!--<script src="{{ url_for('static',filename='customer.js') }}"></script>-->
+<script>
+/* Load Customers in th Table  */
+loadInstruments();
+
+let customers = [];
+
+/* Add customer details in data */
+function load(){
+const details = {
+        cid: document.getElementById("cid").value,
+        cname: document.getElementById("cname").value,
+        sno: document.getElementById("sno").value,
+        iid: document.getElementById("iid").value,
+        pdate: document.getElementById("pdate").value,
+        mno: document.getElementById("mno").value,
+        itype: document.getElementById("itype").value
+    };
+
+fetch("/api/add_instruments", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(details)
+    })
+    .then(res => res.json())
+    .then(response => {
+        alert(response.message);
+        document.getElementById("instrumentForm").reset();
+        loadInstruments();
+
+    })
+    .catch(err => console.error("Error:", err));
+}
+    
+/* Load Instruments Table */
+function loadInstruments() {
+
+fetch("/api/instruments")
+  .then(r => r.json())
+  .then(data => {
+    const tbody = document.getElementById("instrumentTableBody");
+    tbody.innerHTML = "";
+    instruments=data;
+
+if (data.length === 0) {
+    // show NOTHING when empty (as requested)
+} else {
+    data.forEach(c => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${c.company_id}</td>
+                <td>${c.company_name}</td>
+                <td>${c.serial_no}</td>
+                <td>${c.instru_id}</td>
+                <td>${c.p_date}</td>
+                <td>${c.m_no}</td>
+                <td>${c.i_type}</td>
+                <td class="action-col">
+                    <button class="btn-edit" onclick="editCustomer(${c.company_id})">Edit</button>
+                    <button class="btn-delete" onclick="deleteCustomer(${c.company_id})">Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+})
+    .catch(err => console.error("Error:", err));
+}
+    
+</script>
+</html>
