@@ -1,19 +1,10 @@
 /* ================= CUSTOMER FORM ================= */
-.panel {
-    max-height: 350px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
+.customer-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 22px;
+  margin-top: 12px;
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #eaeaea;
-
 
 /* Base button reset (optional but recommended) */
 .btn-edit,
