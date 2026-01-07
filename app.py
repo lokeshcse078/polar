@@ -269,7 +269,7 @@ def del_cus():
 # ---------------- INSTRUMENTS ----------------
 @app.route("/api/instruments")
 @login_required
-def api_instruments():
+def instruments():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM instruments ORDER BY company_id ASEC")
@@ -281,7 +281,7 @@ def api_instruments():
 # ---------------- ADD INSTRUMENTS ----------------
 @app.route("/api/add_instruments", methods=["POST"])
 @login_required
-def add_customers():
+def add_instruments():
     data = request.get_json(silent=True)
 
     if not data:
@@ -338,6 +338,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
