@@ -1,21 +1,9 @@
 /* ================= CUSTOMER FORM ================= */
 .panel {
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: auto;
-
-    background-color: #0f172a;
-    border: 1px solid #1e293b;
-    border-radius: 8px;
+    border: 1px solid #ddd;
 }
-
-.panel::-webkit-scrollbar {
-    width: 8px;
-}
-
-.panel::-webkit-scrollbar-thumb {
-    background-color: #334155;
-    border-radius: 6px;
-
 
 table {
     width: 100%;
@@ -25,7 +13,7 @@ table {
 th, td {
     padding: 10px;
     border-bottom: 1px solid #eaeaea;
-}
+
 .customer-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
