@@ -1,4 +1,46 @@
 /* ================= CUSTOMER FORM ================= */
+
+/* Ensure table takes full width */
+.fixed-header-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Sticky header */
+.fixed-header-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background-color: #0f172a;
+    color: #e5e7eb;
+
+    padding: 12px;
+    border-bottom: 1px solid #1e293b;
+}
+
+/* Table body cells */
+.fixed-header-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #1e293b;
+    color: #f8fafc;
+}
+
+/* Row hover */
+.fixed-header-table tbody tr:hover {
+    background-color: #020617;
+}
+
+/* Scrollbar (dark) */
+.table-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 6px;
+}
+
 .customer-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
