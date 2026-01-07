@@ -97,32 +97,6 @@ def login_api():
         return jsonify({"success": False, "error": "Invalid email or password"}), 401
         
 
-# ---------------- Instruments ----------------
-@app.route("/api/instruments")
-def api_instruments():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM instruments WHERE status='Active'")
-    data = cursor.fetchall()
-    conn.close()
-    return jsonify(data)
-
-# ---------------- Services ----------------
-@app.route("/api/services")
-def api_services():
-    status = request.args.get("status", None)
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    
-    if status:
-        cursor.execute("SELECT s.service_id, s.service_type, s.service_date, s.status, i.instrument_name, c.customer_name FROM services s JOIN instruments i ON s.instrument_id=i.instrument_id JOIN customers c ON s.customer_id=c.customer_id WHERE s.status=%s ORDER BY s.service_date DESC", (status,))
-    else:
-        cursor.execute("SELECT s.service_id, s.service_type, s.service_date, s.status, i.instrument_name, c.customer_name FROM services s JOIN instruments i ON s.instrument_id=i.instrument_id JOIN customers c ON s.customer_id=c.customer_id ORDER BY s.service_date DESC")
-    
-    data = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return jsonify(data)
 
 # ==================================================
 # DASHBOARD APIs
@@ -343,6 +317,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
