@@ -10,8 +10,31 @@
 
     <!-- Customer Page Styles -->
     <link rel="stylesheet" href="{{ url_for('static',filename='customer.css') }}">
+    
 </head>
 <body>
+    <!-- ================= SIDEBAR ================= -->
+<aside class="sidebar">
+  <div class="brand">
+    ⚙️ <span>POLAR ANALYTICS</span>
+    <small>Service Intelligence</small>
+  </div>
+
+  <nav>
+    <a href={{url_for('dashboard')}}">Dashboard</a>
+    <a class="active" href="{{ url_for('customer') }}">Customers</a>
+    <a href="#">Instruments</a>
+    <a href="#">Service Records</a>
+    <a href="#">Data Export</a>
+    <a href="#">User Control</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div id="user-email">—</div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <small>AI Engine • v1.0</small>
+  </div>
+</aside>
 
     <!-- ================= MAIN CONTENT ================= -->
     <main class="main">
