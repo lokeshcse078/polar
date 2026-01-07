@@ -14,12 +14,7 @@ th, td {
     padding: 10px;
     border-bottom: 1px solid #eaeaea;
 
-.customer-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 22px;
-  margin-top: 12px;
-}
+
 /* Base button reset (optional but recommended) */
 .btn-edit,
 .btn-delete {
