@@ -1,13 +1,13 @@
 /* ================= CUSTOMER FORM ================= */
 
 /* Ensure table takes full width */
-.fixed-header-table {
+.custa{
     width: 100%;
     border-collapse: collapse;
 }
 
 /* Sticky header */
-.fixed-header-table thead th {
+.custa thead th {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -20,14 +20,14 @@
 }
 
 /* Table body cells */
-.fixed-header-table tbody td {
+.custa tbody td {
     padding: 10px;
     border-bottom: 1px solid #1e293b;
     color: #f8fafc;
 }
 
 /* Row hover */
-.fixed-header-table tbody tr:hover {
+.custa tbody tr:hover {
     background-color: #020617;
 }
 
