@@ -54,6 +54,11 @@ def login_page():
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/instrument")
+@login_required
+def dashboard():
+    return render_template("instruments.html")
+
 @app.route("/logout")
 def logout():
     session.clear()
@@ -269,7 +274,7 @@ def del_cus():
 # ---------------- INSTRUMENTS ----------------
 @app.route("/api/instruments")
 @login_required
-def instruments():
+def api_instruments():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM instruments ORDER BY company_id ASEC")
@@ -338,6 +343,7 @@ def pending_services():
 # ---------------- MAIN ----------------
 if __name__ == "__main__":
     app.run(debug=False)
+
 
 
 
